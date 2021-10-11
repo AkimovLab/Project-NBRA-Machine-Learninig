@@ -1,0 +1,8 @@
+.ipynb_checkpoints
+__pycache__
+namd_ann
+namd_regular
+*.MATRIX
+*.png
+*.json
+*.xml
