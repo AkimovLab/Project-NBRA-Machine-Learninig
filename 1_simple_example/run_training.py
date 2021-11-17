@@ -16,10 +16,12 @@ rnd = Random()
 
 #==================== GAPs training =====================
 
-params = { "input_files_prefix":"e01", "ann_arch":[10,10] , "mode1":0, "mode2":1   }
+arch = [5]
+
+params = { "input_files_prefix":"e01", "ann_arch":arch , "mode1":0, "mode2":1   }
 
 ann_params = { "num_epochs":25, 
-               "steps_per_epoch":100, 
+               "steps_per_epoch":250, 
                "error_collect_frequency":1,
                "epoch_size":250, 
                "learning_method":2,
@@ -38,10 +40,10 @@ ann.step2_workflow(params, ann_params, rnd, plt)
 
 #================== NACs training ===============
 
-params = { "input_files_prefix":"nac01", "ann_arch":[10,10] , "mode1":0, "mode2":1   }
+params = { "input_files_prefix":"nac01", "ann_arch":arch , "mode1":0, "mode2":1   }
 
 ann_params = { "num_epochs":25, 
-               "steps_per_epoch":100, 
+               "steps_per_epoch":250, 
                "error_collect_frequency":1,
                "epoch_size":250, 
                "learning_method":2,

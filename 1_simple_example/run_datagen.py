@@ -30,7 +30,7 @@ def nice_plot_data(_plt, x, y, x_label, y_label, fig_name, fig_label, clr):
 
 
 #=============== Data gen ================
-nsteps = 5001
+nsteps = 1001
 t, E01, NAC01 = ham.create_Hvib2(nsteps)
 
 nice_plot_data(plt, t * units.au2fs, E01, "Time, fs", "Energy gap, a.u.", "e01-t.png", "Energy", "red")
@@ -41,8 +41,8 @@ nice_plot_data(plt, t * units.au2fs, NAC01, "Time, fs", "NAC a.u.", "nac01-t.png
 #================ Gaps ====================
 params = { "dt": 1.0, "wspan":500.0, "dw":1.0, "do_output":False, "do_center":True, 
            "acf_type":1, "data_type":0, 
-           "leading_w_fraction":0.0001,  "deriv_scaling":50.0,
-           "tau":[1000, 3000, 5000.0], "training_steps":list(range(0,5000)),
+           "leading_w_fraction":0.0001,  "deriv_scaling":0.0,
+           "tau":[1000, 3000, 5000.0], "training_steps":list(range(0,1000)),
            "output_files_prefix":"e01"    
          }
 ann.step1_workflow(E01, params, plt)
@@ -52,8 +52,8 @@ ann.step1_workflow(E01, params, plt)
 
 params = { "dt": 1.0, "wspan":500.0, "dw":1.0, "do_output":False, "do_center":True, 
            "acf_type":1, "data_type":0, 
-           "leading_w_fraction":0.0001,  "deriv_scaling":50.0,
-           "tau":[1000, 3000, 5000.0], "training_steps":list(range(0,5000)),
+           "leading_w_fraction":0.0001,  "deriv_scaling":0.0,
+           "tau":[1000, 3000, 5000.0], "training_steps":list(range(0,1000)),
            "output_files_prefix":"nac01"    
          }
 

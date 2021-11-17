@@ -32,10 +32,14 @@ def compute_model(q, params, full_id):
 
 
 
-if __name__ == '__main__':
+def main(case, what):
 
-    #case = "direct"
-    case = "ann"
+    
+
+    if case=="direct" and what in [0, 2] :
+        os.system("mkdir namd_regular")
+    elif case=="ann" and what in [0, 2]:
+        os.system("mkdir namd_ann")
 
 
     nthreads = 4
@@ -56,14 +60,14 @@ if __name__ == '__main__':
     gaps = None
     
     params_common = { "nsteps":2000, "dt":1.0*units.fs2au, 
-                      "ntraj":50, "x0":[-4.0], "p0":[4.0], "masses":[2000.0], "k":[0.01],                  
+                      "ntraj":100, "x0":[-4.0], "p0":[4.0], "masses":[2000.0], "k":[0.01],                  
                       "nstates":2, "istate":[1, 0],
                       "which_adi_states":range(2), "which_dia_states":range(2),
                       "rep_ham":1, "tsh_method":0, "force_method":0, "nac_update_method":0,
                       "hop_acceptance_algo":31, "momenta_rescaling_algo":0,
                       "time_overlap_method":1, "mem_output_level":-1,  "txt_output_level":4,
-                      "properties_to_save": ['timestep', 'time', 'SH_pop', 'SH_pop_raw', 'hvib_adi'],
-                      "state_tracking_algo":2, "convergence":0,  "max_number_attempts":100, 
+                      "properties_to_save": ['timestep', 'time', 'SH_pop', 'SH_pop_raw'],
+                      "state_tracking_algo":0, "convergence":0,  "max_number_attempts":100, 
                       "min_probability_reordering":0.01, "decoherence_algo":0, "Temperature": 300.0                    
                     }
 
@@ -79,10 +83,12 @@ if __name__ == '__main__':
         dyn_params.update({ "dir_prefix":"namd_regular" })
 
        
-        step4.namd_workflow(dyn_params, compute_model, model_params_direct, rnd, nthreads, 
-                            methods, init_states, tsh_methods, batches, "fork", True)
+        if what in [0, 2]:
+            step4.namd_workflow(dyn_params, compute_model, model_params_direct, rnd, nthreads, 
+                                methods, init_states, tsh_methods, batches, "fork", True)
 
-        step4.nice_plots(dyn_params, init_states, tsh_methods, methods, batches, fig_label="Direct NA-MD")
+        if what in [1, 2]:
+            step4.nice_plots(dyn_params, init_states, tsh_methods, methods, batches, fig_label="Direct NA-MD")
 
     #=========================== ANN =================================
 
@@ -95,9 +101,18 @@ if __name__ == '__main__':
         dyn_params = dict(params_common)
         dyn_params.update({ "dir_prefix":"namd_ann" })
 
-        step4.namd_workflow(dyn_params, compute_model, model_params_ann, rnd, nthreads, 
-                            methods, init_states, tsh_methods, batches, "fork", True)
+
+        if what in [0, 2]:
+            step4.namd_workflow(dyn_params, compute_model, model_params_ann, rnd, nthreads, 
+                                methods, init_states, tsh_methods, batches, "fork", True)
     
-        step4.nice_plots(dyn_params, init_states, tsh_methods, methods, batches, fig_label="Ann NA-MD")
+        if what in [1, 2]:
+            step4.nice_plots(dyn_params, init_states, tsh_methods, methods, batches, fig_label="Ann NA-MD")
+
+
+
+what = 2
+main("direct", what)
+main("ann", what)
 
 
